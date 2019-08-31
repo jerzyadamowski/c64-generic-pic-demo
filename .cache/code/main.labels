@@ -1,0 +1,8 @@
+
+al C:0801 .BASIC
+
+al C:083c .end
+al C:083f .irq
+al C:084d .clear
+al C:0845 .initscreen
+al C:080d .entry

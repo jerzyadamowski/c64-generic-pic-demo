@@ -1,0 +1,73 @@
+
+; ******** Source: d:\@projects\c64-generic-pic-demo\code\main.asm
+     1                          ; C64
+     2                          BASIC         = $0801
+     3                          
+     4                          ;==========================================================
+     5                          ; BASIC header
+     6                          ;==========================================================
+     7                          
+     8                          * = BASIC
+     9                          
+    10  0801 0b08                       !byte $0b, $08
+    11  0803 9a                         !byte $9A                     ; BASIC line number:  $029A = 666; $029B = 667     
+    12  0804 029e                       !byte $02, $9E
+    13  0806 32                         !byte '0' + entry % 10000 / 1000        
+    14  0807 30                         !byte '0' + entry %  1000 /  100        
+    15  0808 36                         !byte '0' + entry %   100 /   10        
+    16  0809 31                         !byte '0' + entry %    10             
+    17  080a 000000                     !byte $00, $00, $00           ; end of basic
+    18                          
+    19                          entry
+    20  080d 78                         sei
+    21  080e 204508                     jsr initscreen
+    22                                  ;jsr inittext
+    23  0811 a07f                       ldy #$7f
+    24  0813 8c0ddc                     sty $dc0d
+    25  0816 8c0ddd                     sty $dd0d
+    26  0819 ad0ddc                     lda $dc0d
+    27  081c ad0ddd                     lda $dd0d
+    28  081f a901                       lda #$01
+    29  0821 8d1ad0                     sta $d01a
+    30  0824 ad11d0                     lda $d011
+    31  0827 297f                       and #$7f
+    32  0829 8d11d0                     sta $d011
+    33  082c a93f                       lda #<irq
+    34  082e a208                       ldx #>irq
+    35  0830 8d1403                     sta $0314
+    36  0833 8e1503                     stx $0315
+    37  0836 a900                       lda #$00
+    38  0838 8d12d0                     sta $d012
+    39  083b 58                         cli
+    40                          end
+    41  083c 4c3c08                     jmp end
+    42                          ;---------------------------------------
+    43                          ;irq routine
+    44                          
+    45                          irq
+    46  083f ce19d0                     dec $d019
+    47                                  ;jsr fontcolor
+    48  0842 4c81ea                     jmp $ea81
+    49                          ;---------------------------------------
+    50                          ;clear screen to color
+    51                          
+    52                          initscreen
+    53  0845 a200                       ldx #$00
+    54  0847 8e21d0                     stx $d021
+    55  084a 8e20d0                     stx $d020
+    56                          
+    57                          clear
+    58  084d a920                       lda #$20
+    59  084f 9d0004                     sta $0400,x
+    60  0852 9d0005                     sta $0500,x
+    61  0855 9d0006                     sta $0600,x
+    62  0858 9de806                     sta $06e8,x
+    63  085b a901                       lda #$01
+    64  085d 9d00d8                     sta $d800,x
+    65  0860 9d00d9                     sta $d900,x
+    66  0863 9d00da                     sta $da00,x
+    67  0866 9de8da                     sta $dae8,x
+    68  0869 e8                         inx
+    69  086a d0e1                       bne clear
+    70  086c 60                         rts
+    71                          ;---------------------------------------
