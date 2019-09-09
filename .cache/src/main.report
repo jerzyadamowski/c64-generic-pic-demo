@@ -1,5 +1,5 @@
 
-; ******** Source: d:\@projects\c64-generic-pic-demo\code\main.asm
+; ******** Source: c:\@projects\c64\c64-generic-pic-demo\src\main.asm
      1                          ; C64
      2                          BASIC         = $0801
      3                          

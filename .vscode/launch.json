@@ -8,7 +8,7 @@
             "type": "asm",
             "request": "launch",
             "name": "Launch Debugger C64",
-            "binary": "${workspaceFolder}\\.cache\\code\\main.prg",
+            "binary": "${workspaceFolder}\\.cache\\src\\main.prg",
         }
     ]
 }
