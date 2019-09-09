@@ -18,18 +18,18 @@ BASIC         = $0801
 
 entry
         sei
-        jsr initscreen
-        ;jsr inittext
+        ;jsr initscreen
+        jsr multicolorbitmap
         ldy #$7f
         sty $dc0d
         sty $dd0d
         lda $dc0d
         lda $dd0d
-        lda #$01
-        sta $d01a
-        lda $d011
-        and #$7f
-        sta $d011
+        ;lda #$01
+        ;sta $d01a
+        ;lda $d011
+        ;and #$7f
+        ;sta $d011
         lda #<irq
         ldx #>irq
         sta $0314
@@ -69,3 +69,11 @@ clear
         bne clear
         rts
 ;---------------------------------------
+multicolorbitmap
+        lda $d011
+        ora #$20
+        sta $d011
+        lda $d016
+        ora #$10
+        sta $d016
+        rts
